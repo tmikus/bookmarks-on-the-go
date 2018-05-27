@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "build": "webpack",
+    "build": "npm run clean && webpack",
+    "clean": "del -f dist",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -17,6 +18,8 @@
   },
   "homepage": "https://github.com/tmikus/bookmarks-on-the-go#readme",
   "devDependencies": {
+    "copy-webpack-plugin": "^4.5.1",
+    "del-cli": "^1.1.0",
     "ts-loader": "^4.3.0",
     "typescript": "^2.8.3",
     "webpack": "^4.9.1",
