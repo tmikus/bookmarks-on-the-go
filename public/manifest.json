@@ -9,5 +9,9 @@
   ],
   "background": {
     "scripts": ["background.js"]
+  },
+  "browser_action": {
+    "default_title": "Bookmarks on the go",
+    "default_popup": "popup.html"
   }
 }

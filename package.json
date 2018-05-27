@@ -4,7 +4,7 @@
   "description": "",
   "scripts": {
     "build": "npm run clean && webpack",
-    "clean": "del -f dist",
+    "clean": "rimraf dist",
     "start": "webpack --watch",
     "prestart": "npm run clean",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -21,7 +21,7 @@
   "homepage": "https://github.com/tmikus/bookmarks-on-the-go#readme",
   "devDependencies": {
     "copy-webpack-plugin": "^4.5.1",
-    "del-cli": "^1.1.0",
+    "rimraf": "^2.6.2",
     "ts-loader": "^4.3.0",
     "typescript": "^2.8.3",
     "webpack": "^4.9.1",

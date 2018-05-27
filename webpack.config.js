@@ -1,10 +1,11 @@
-const CopyWebpackPlugin = require('copy-webpack-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const path = require('path');
 
 module.exports = {
   devtool: 'inline-source-map',
   entry: {
-    background: './src/background/index.ts'
+    background: './src/background/index.ts',
+    popup: './src/background/index.ts',
   },
   mode: 'development',
   module: {
