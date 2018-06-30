@@ -5,7 +5,7 @@ module.exports = {
   devtool: 'inline-source-map',
   entry: {
     background: './src/background/index.ts',
-    popup: './src/background/index.ts',
+    popup: './src/popup/index.tsx',
   },
   mode: 'development',
   module: {
@@ -14,7 +14,14 @@ module.exports = {
         test: /\.tsx?$/,
         use: 'ts-loader',
         exclude: /node_modules/
-      }
+      },
+      {
+        test: /\.css$/,
+        use: [
+          { loader: "style-loader" },
+          { loader: "css-loader" }
+        ]
+      },
     ]
   },
   resolve: {
@@ -27,6 +34,8 @@ module.exports = {
   plugins: [
     new CopyWebpackPlugin([
       { from: 'public' },
+      { from: 'node_modules/metro4/build', to: 'lib/metro4' },
+      { from: 'node_modules/jquery/dist', to: 'lib/jquery' },
     ]),
   ],
 };
