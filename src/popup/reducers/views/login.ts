@@ -1,4 +1,5 @@
 import { Action } from '..';
+import { isLoginAction } from '../auth';
 
 export interface LoginState {
   isLoggingIn: boolean;
@@ -13,31 +14,53 @@ const defaultLoginState: LoginState = {
 };
 
 export const login = (state: LoginState = defaultLoginState, action: Action): LoginState => {
-  switch (action.type) {
-    case 'login-view:set-password':
-      return {
-        ...state,
-        password: action.value,
-      };
-    case 'login-view:set-user-name':
-      return {
-        ...state,
-        userName: action.value,
-      };
-    default: return state;
+  if (isSetPasswordAction(action)) {
+    return {
+      ...state,
+      password: action.password,
+    };
   }
+  if (isSetUserNameAction(action)) {
+    return {
+      ...state,
+      userName: action.userName,
+    }
+  }
+  if (isLoginAction(action)) {
+    return {
+      ...state,
+      isLoggingIn: true,
+    };
+  }
+  return state;
 };
 
-export function createSetPasswordAction(password: string): Action {
+export interface SetPasswordAction extends Action<'login-view:set-password'> {
+  password: string;
+}
+
+export function createSetPasswordAction(password: string): SetPasswordAction {
   return {
     type: 'login-view:set-password',
-    value: password,
+    password,
   };
 }
 
-export function createSetUserNameAction(userName: string): Action {
+export function isSetPasswordAction(action: Action): action is SetPasswordAction {
+  return action.type === 'login-view:set-password';
+}
+
+export interface SetUserNameAction extends Action<'login-view:set-user-name'> {
+  userName: string;
+}
+
+export function createSetUserNameAction(userName: string): SetUserNameAction {
   return {
     type: 'login-view:set-user-name',
-    value: userName,
+    userName,
   };
+}
+
+export function isSetUserNameAction(action: Action): action is SetUserNameAction {
+  return action.type === 'login-view:set-user-name';
 }

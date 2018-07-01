@@ -13,9 +13,8 @@ import {
 import { views } from './views';
 import { LoginState } from './views/login';
 
-export interface Action {
-  type: string;
-  value: string;
+export interface Action<T extends string = string> {
+  type: T;
 }
 
 export interface AppState {

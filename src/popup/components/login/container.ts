@@ -9,6 +9,7 @@ import {
   createSetPasswordAction,
   createSetUserNameAction,
 } from '../../reducers/views/login';
+import { createLoginAction } from '../../reducers/auth';
 
 const mapStateToProps = (state: AppState): LoginStateProps => ({
   isLoggingIn: state.views.login.isLoggingIn,
@@ -16,10 +17,8 @@ const mapStateToProps = (state: AppState): LoginStateProps => ({
   userName: state.views.login.userName,
 });
 
-const mapDispatchToProps = (dispatch: Dispatch, ownProps: any): LoginDispatchProps => ({
-  login: (userName: string, password: string) => {
-    console.log('Logging in');
-  },
+const mapDispatchToProps = (dispatch: Dispatch): LoginDispatchProps => ({
+  login: (userName: string, password: string) => dispatch(createLoginAction(userName, password)),
   setPassword: (value: string) => dispatch(createSetPasswordAction(value)),
   setUserName: (value: string) => dispatch(createSetUserNameAction(value)),
 });
