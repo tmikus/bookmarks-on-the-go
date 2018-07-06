@@ -1,6 +1,5 @@
 import { connect } from 'react-redux';
-import { Dispatch } from 'redux';
-import { AppState } from '../../reducers';
+import { AppState, Dispatch } from '../../reducers';
 import {
   AppDispatchProps,
   AppStateProps,

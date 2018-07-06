@@ -3,6 +3,7 @@ import * as React from 'react';
 import './style.css';
 
 export interface LoginStateProps {
+  error: string | undefined;
   isLoggingIn: boolean;
   password: string;
   userName: string;
@@ -41,6 +42,7 @@ export class LoginView extends React.PureComponent<LoginProps> {
     return (
       <main className="container login-form">
         <h2>Login</h2>
+        {this.props.error && <p className="remark">{this.props.error}</p>}
         <form onSubmit={this.onLoginSubmit}>
           <div className="form-group">
             <label>User name</label>
@@ -63,13 +65,25 @@ export class LoginView extends React.PureComponent<LoginProps> {
             />
           </div>
           <div className="form-group">
-            <button
-              className="button success"
-              disabled={this.props.isLoggingIn}
-              type="submit"
-            >
-              Login
-            </button>
+            <div className="grid">
+              <div className="row">
+                <div className="cell-3">
+                  <button
+                    className="button success"
+                    disabled={this.props.isLoggingIn}
+                    type="submit"
+                  >
+                    Login
+                  </button>
+                </div>
+                {
+                  this.props.isLoggingIn &&
+                  <div className="cell">
+                    <div className="loading-bar" data-role="activity" data-type="metro" data-style="dark"></div>
+                  </div>
+                }
+              </div>
+            </div>
           </div>
         </form>
       </main>

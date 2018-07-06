@@ -1,13 +1,19 @@
 import { Action } from '..';
-import { isLoginAction } from '../auth';
+import {
+  isLoginBeginAction,
+  isLoginFailedAction,
+  isLoginSuccessAction,
+} from '../auth';
 
 export interface LoginState {
+  error: string | undefined;
   isLoggingIn: boolean;
   password: string;
   userName: string;
 }
 
 const defaultLoginState: LoginState = {
+  error: undefined,
   isLoggingIn: false,
   password: '',
   userName: '',
@@ -26,11 +32,26 @@ export const login = (state: LoginState = defaultLoginState, action: Action): Lo
       userName: action.userName,
     }
   }
-  if (isLoginAction(action)) {
+  if (isLoginBeginAction(action)) {
     return {
       ...state,
+      error: undefined,
       isLoggingIn: true,
     };
+  }
+  if (isLoginFailedAction(action)) {
+    return {
+      ...state,
+      error: action.message,
+      isLoggingIn: false,
+    };
+  }
+  if (isLoginSuccessAction(action)) {
+    return {
+      ...state,
+      isLoggingIn: false,
+      error: undefined,
+    }
   }
   return state;
 };

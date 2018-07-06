@@ -1,5 +1,4 @@
 import { connect } from 'react-redux';
-import { Dispatch } from 'redux';
 import { AppState } from '../../reducers';
 import {
   LoginDispatchProps,
@@ -10,8 +9,10 @@ import {
   createSetUserNameAction,
 } from '../../reducers/views/login';
 import { createLoginAction } from '../../reducers/auth';
+import { Dispatch } from '../../reducers';
 
 const mapStateToProps = (state: AppState): LoginStateProps => ({
+  error: state.views.login.error,
   isLoggingIn: state.views.login.isLoggingIn,
   password: state.views.login.password,
   userName: state.views.login.userName,

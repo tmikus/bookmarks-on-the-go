@@ -2,6 +2,7 @@ import {
   combineReducers,
   Reducer,
 } from 'redux';
+import { ThunkAction, ThunkDispatch } from 'redux-thunk';
 import {
   auth,
   AuthState,
@@ -16,6 +17,12 @@ import { LoginState } from './views/login';
 export interface Action<T extends string = string> {
   type: T;
 }
+
+export type AsyncAction = ThunkAction<any, any, any, Action>;
+
+export type AnyAction = Action | AsyncAction;
+
+export type Dispatch = ThunkDispatch<any, any, Action>;
 
 export interface AppState {
   auth: AuthState;
