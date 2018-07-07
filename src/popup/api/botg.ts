@@ -5,8 +5,9 @@ export interface LoginResult {
   success: boolean;
 }
 
-export function login(userName: string, password: string): Promise<LoginResult> {
-  return fetch(`${ApiUrl}auth/login`, {
+export async function login(userName: string, password: string): Promise<LoginResult> {
+  try {
+    const response = await fetch(`${ApiUrl}auth/login`, {
       body: JSON.stringify({
         UserName: userName,
         Password: password,
@@ -15,9 +16,17 @@ export function login(userName: string, password: string): Promise<LoginResult> 
         "Content-Type": "application/json; charset=utf-8",
       },
       method: 'POST',
-    })
-    .then((res) => ({ success: true, errorMessage: undefined }))
-    .catch((ex) => ({ success: false, errorMessage: ex }));
+    });
+    if (response.status !== 200) {
+      return {
+        success: false,
+        errorMessage: await response.text(),
+      };
+    }
+    return { success: true, errorMessage: undefined };
+  } catch (ex) {
+    return { success: false, errorMessage: ex.toString() };
+  }
 }
 
 export interface LogoutResult {
@@ -25,13 +34,23 @@ export interface LogoutResult {
   success: boolean;
 }
 
-export function logout(): Promise<LogoutResult> {
-  return fetch(`${ApiUrl}auth/logout`, {
+export async function logout(): Promise<LogoutResult> {
+  try {
+    const response = await fetch(`${ApiUrl}auth/logout`, {
       headers: {
         'Content-Type': 'application/json; charset=utf-8',
       },
       method: 'POST',
-    })
-    .then(() => ({ success: true, errorMessage: undefined }))
-    .catch((ex) => ({ success: false, errorMessage: ex }));
+    });
+    if (response.status !== 200) {
+      return {
+        success: false,
+        errorMessage: await response.text(),
+      };
+    }
+    return { success: true, errorMessage: undefined };
+  }
+  catch (ex) {
+    return { success: false, errorMessage: ex.toString() };
+  }
 }

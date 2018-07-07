@@ -40,7 +40,7 @@ export class LoginView extends React.PureComponent<LoginProps> {
     return (
       <main className="container login-form">
         <h2>Login</h2>
-        {this.props.error && <p className="remark">{this.props.error}</p>}
+        {this.props.error && <p className="remark alert">{this.props.error}</p>}
         <form onSubmit={this.onLoginSubmit}>
           <div className="form-group">
             <label>User name</label>
