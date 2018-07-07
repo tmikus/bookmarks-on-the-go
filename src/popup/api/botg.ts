@@ -1,7 +1,7 @@
 import { ApiUrl } from '../config';
 
 export interface LoginResult {
-  message: string | undefined;
+  errorMessage: string | undefined;
   success: boolean;
 }
 
@@ -16,6 +16,22 @@ export function login(userName: string, password: string): Promise<LoginResult> 
       },
       method: 'POST',
     })
-    .then((res) => ({ success: true, message: undefined }))
-    .catch((ex) => ({ success: false, message: ex }));
+    .then((res) => ({ success: true, errorMessage: undefined }))
+    .catch((ex) => ({ success: false, errorMessage: ex }));
+}
+
+export interface LogoutResult {
+  errorMessage: string | undefined;
+  success: boolean;
+}
+
+export function logout(): Promise<LogoutResult> {
+  return fetch(`${ApiUrl}auth/logout`, {
+      headers: {
+        'Content-Type': 'application/json; charset=utf-8',
+      },
+      method: 'POST',
+    })
+    .then(() => ({ success: true, errorMessage: undefined }))
+    .catch((ex) => ({ success: false, errorMessage: ex }));
 }

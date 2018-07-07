@@ -1,7 +1,5 @@
 import * as React from 'react';
 
-import './style.css';
-
 export interface LoginStateProps {
   error: string | undefined;
   isLoggingIn: boolean;

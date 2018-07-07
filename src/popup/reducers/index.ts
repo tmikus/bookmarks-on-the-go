@@ -20,8 +20,6 @@ export interface Action<T extends string = string> {
 
 export type AsyncAction = ThunkAction<any, any, any, Action>;
 
-export type AnyAction = Action | AsyncAction;
-
 export type Dispatch = ThunkDispatch<any, any, Action>;
 
 export interface AppState {
