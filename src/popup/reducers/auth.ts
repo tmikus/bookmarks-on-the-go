@@ -3,6 +3,7 @@ import {
   login,
   logout,
 } from '../api/botg';
+import { setLoginData } from '../settings';
 
 export interface AuthState {
   isLoggedIn: boolean;
@@ -13,19 +14,28 @@ const defaultAuthState: AuthState = {
 };
 
 export const auth = (state: AuthState = defaultAuthState, action: Action): AuthState => {
-  switch (action.type) {
-    default: return state;
+  if (isLoginSuccessAction(action)) {
+    return {
+      ...state,
+      isLoggedIn: true,
+    };
   }
+  if (isLoginFailedAction(action) || isLoggedOutAction(action)) {
+    return {
+      ...state,
+      isLoggedIn: false,
+    };
+  }
+  return state;
 };
 
 export function createLoginAction(userName: string, password: string): AsyncAction {
-  return (dispatch) => {
-    dispatch(createLoginBeginAction());
-    return login(userName, password)
-      .then((result) => {
-        if (!result.success) dispatch(createLoginFailedAction(result.errorMessage));
-        else dispatch(createLoginSuccessAction());
-      });
+  return async (dispatch) => {
+    await dispatch(createLoginBeginAction());
+    const result = await login(userName, password);
+    if (!result.success) return dispatch(createLoginFailedAction(result.errorMessage));
+    setLoginData({ userName, password });
+    return dispatch(createLoginSuccessAction());
   };
 }
 
@@ -67,11 +77,9 @@ export function isLoginSuccessAction(action: Action): action is LoginSuccessActi
 }
 
 export function createLogoutAction(): AsyncAction {
-  return (dispatch) => {
-    return logout().then((result) => {
-      // TODO: Handle the result
-      dispatch(createLoggedOutAction());
-    });
+  return async (dispatch) => {
+    await logout();
+    return dispatch(createLoggedOutAction());
   };
 }
 
