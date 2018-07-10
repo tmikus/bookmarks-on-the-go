@@ -2,7 +2,7 @@ import {
   Action,
   AsyncAction,
 } from './index';
-import { getBookmarks } from '../api/botg';
+import { getBookmarks } from '../../background/api/botg';
 import { createLoggedOutAction } from './auth';
 
 export interface BookmarksState {

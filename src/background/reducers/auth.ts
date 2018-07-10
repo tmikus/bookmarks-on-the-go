@@ -1,9 +1,9 @@
-import { Action, AsyncAction } from '.';
+import { setLoginData } from '../settings';
+import { Action, AsyncAction } from '../types';
 import {
   login,
   logout,
-} from '../../background/api/botg';
-import { setLoginData } from '../settings';
+} from '../api/botg';
 
 export interface AuthState {
   isLoggedIn: boolean;
