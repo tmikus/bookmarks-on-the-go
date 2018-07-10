@@ -1,5 +1,5 @@
-import Port = browser.runtime.Port;
 import { Action } from '../core/types';
+
 export interface Message {
   action: Action;
   source: string;
@@ -10,14 +10,13 @@ export type DisposeListener = () => void;
 
 let listeners: Array<ActionCallback> = [];
 
-console.log('Initialise connection');
+console.log('Connecting to the background script');
 chrome.runtime.onMessage.addListener((message: Message) => {
-  if (message.source !== 'client') return;
-  console.log('Received client message:', message);
+  if (message.source !== 'background') return;
   listeners.forEach((listener) => listener(message.action));
 });
 
-export function listenToClientActions(callback: ActionCallback): DisposeListener {
+export function listenToBackgroundActions(callback: ActionCallback): DisposeListener {
   listeners = [...listeners, callback];
   return () => {
     const listenerIndex = listeners.indexOf(callback);
@@ -30,8 +29,5 @@ export function listenToClientActions(callback: ActionCallback): DisposeListener
 }
 
 export function sendAction(action: Action): void {
-  chrome.runtime.sendMessage({
-    action,
-    source: 'background',
-  });
+  chrome.runtime.sendMessage({ source: 'client', action });
 }

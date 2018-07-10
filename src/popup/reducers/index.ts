@@ -15,10 +15,7 @@ import { views } from './views';
 import { AppViewState } from './views/app';
 import { LoginState } from './views/login';
 import { bookmarks, BookmarksState } from './bookmarks';
-
-export interface Action<T extends string = string> {
-  type: T;
-}
+import { Action } from '../../core/types';
 
 export type AsyncAction = ThunkAction<any, AppState, any, Action>;
 

@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/tmikus/bookmarks-on-the-go#readme",
   "devDependencies": {
+    "@types/chrome": "0.0.69",
     "copy-webpack-plugin": "^4.5.1",
     "css-loader": "^0.28.11",
     "rimraf": "^2.6.2",

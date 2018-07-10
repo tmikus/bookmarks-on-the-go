@@ -1,9 +1,4 @@
-import { Action } from '..';
-import {
-  isLoginBeginAction,
-  isLoginFailedAction,
-  isLoginSuccessAction,
-} from '../auth';
+import { Action } from '../../../core/types';
 
 export interface LoginState {
   error: string | undefined;
@@ -30,27 +25,6 @@ export const login = (state: LoginState = defaultLoginState, action: Action): Lo
     return {
       ...state,
       userName: action.userName,
-    }
-  }
-  if (isLoginBeginAction(action)) {
-    return {
-      ...state,
-      error: undefined,
-      isLoggingIn: true,
-    };
-  }
-  if (isLoginFailedAction(action)) {
-    return {
-      ...state,
-      error: action.message,
-      isLoggingIn: false,
-    };
-  }
-  if (isLoginSuccessAction(action)) {
-    return {
-      ...state,
-      isLoggingIn: false,
-      error: undefined,
     }
   }
   return state;
